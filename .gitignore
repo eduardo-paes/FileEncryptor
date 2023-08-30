@@ -475,3 +475,11 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+
+logs
+configs
+files
+files/*
+
+.DS_Store

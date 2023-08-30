@@ -10,7 +10,10 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/src/CLI/bin/Debug/net7.0/CLI.dll",
-            "args": [],
+            "args": [
+                "enc.json",
+                "0"
+            ],
             "cwd": "${workspaceFolder}/src/CLI",
             "console": "internalConsole",
             "stopAtEntry": false
