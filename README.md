@@ -32,7 +32,7 @@ O arquivo de configuração deve estar presente no caminho estipulado nas config
 ```json
 {
   "Settings": {
-    "ConfigPath": "C://FrgService/Utils/Integracao.Gluck/Configs"
+    "ConfigPath": "C://Path/To/Configs/Directory"
   }
 }
 ```
