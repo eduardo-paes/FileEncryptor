@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Serilog;
 using CLI.Factories;
 using System.Text.Json;
@@ -47,7 +46,7 @@ namespace CLI
                 var settings = GetConfig(fileConfig);
 
                 // Inicializa o serviço de criptografia
-                var cryptoService = CryptoServiceFactory.Create(Encoding.UTF8.GetBytes(settings.Key!));
+                var cryptoService = CryptoServiceFactory.Create(settings.Key!);
 
                 // Verifica se a operação é de criptografia ou descriptografia
                 if (settings.Operation == "ENC")
@@ -68,7 +67,7 @@ namespace CLI
                         string destinationFile = Path.Combine(settings.Destination!, fileName);
 
                         // Adiciona extensão .enc ao arquivo de destino
-                        destinationFile += ".enc";
+                        destinationFile += settings.EncSufix ?? ".enc";
 
                         // Verifica se o arquivo de destino já existe
                         if (File.Exists(destinationFile))
@@ -104,8 +103,23 @@ namespace CLI
                         // Gera nome do arquivo de destino
                         string destinationFile = Path.Combine(settings.Destination!, fileName);
 
-                        // Remove extensão .enc ao arquivo de destino
-                        destinationFile = destinationFile.Replace(".enc", "");
+                        // Adiciona sufixo ao arquivo de destino
+                        if (!string.IsNullOrEmpty(settings.DecSufix) && !string.IsNullOrEmpty(settings.EncSufix))
+                        {
+                            destinationFile = destinationFile.Replace(settings.EncSufix, settings.DecSufix);
+                        }
+
+                        // Remove sufixo do arquivo de destino
+                        else if (!string.IsNullOrEmpty(settings.EncSufix))
+                        {
+                            destinationFile = destinationFile.Replace(settings.EncSufix, "");
+                        }
+
+                        // Remove extensão genérica (.enc) ao arquivo de destino
+                        else
+                        {
+                            destinationFile = destinationFile.Replace(".enc", "");
+                        }
 
                         // Verifica se o arquivo de destino já existe
                         if (File.Exists(destinationFile))

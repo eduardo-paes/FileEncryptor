@@ -6,5 +6,7 @@ namespace CLI.Models
         public string? Destination { get; set; }
         public string? Key { get; set; }
         public string? Operation { get; set; }
+        public string? EncSufix { get; set; }
+        public string? DecSufix { get; set; }
     }
 }

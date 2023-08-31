@@ -21,11 +21,15 @@ A aplicação espera receber o nome do arquivo de configuração que será utili
   "Source": "C://Path/To/Source/Directory",
   "Destination": "C://Path/To/Destination/Directory",
   "Key": "CHAVE_CRIPTOGRAFICA_TESTE",
-  "Operation": "ENC" // "DEC"
+  "Operation": "ENC", // "DEC",
+  "EncSufix": ".bin",
+  "DecSufix": ".txt"
 }
 ```
 
-O parâmetro operation aceita o valor `ENC` para encriptação e `DEC` para decriptação.
+O parâmetro `Operation` aceita o valor `ENC` para encriptação e `DEC` para decriptação.
+
+Os parâmetros `EncSufix` e `DecSufix` definem respectivamente qual será o sufixo do arquivo encriptado e do arquivo decriptado.
 
 O arquivo de configuração deve estar presente no caminho estipulado nas configurações da aplicação (`appsettings.json`), isto é, deve existir no diretório informado conforme caminho de exemplo abaixo:
 
