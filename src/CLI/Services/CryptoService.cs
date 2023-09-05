@@ -22,7 +22,7 @@ namespace CLI.Services
         /// <exception cref="IOException">Thrown when the file is corrupted.</exception>
         public void EncryptFile(string inputFile, string outputFile)
         {
-            using Aes aesAlg = CreateAes(true);
+            using Aes aesAlg = CreateAes();
             using FileStream fsInput = new(inputFile, FileMode.Open, FileAccess.Read);
             using FileStream fsOutput = new(outputFile, FileMode.Create, FileAccess.Write);
             using ICryptoTransform encryptor = aesAlg.CreateEncryptor();
@@ -48,8 +48,8 @@ namespace CLI.Services
         public void DecryptFile(string inputFile, string outputFile)
         {
             using Aes aesAlg = CreateAes();
-            using FileStream fsInput = new(inputFile, FileMode.Open, FileAccess.Read);
-            using FileStream fsOutput = new(outputFile, FileMode.Create, FileAccess.Write);
+            using FileStream fsInput = new(inputFile, FileMode.Open);
+            using FileStream fsOutput = new(outputFile, FileMode.OpenOrCreate, FileAccess.Write);
 
             byte[] iv = new byte[aesAlg.IV.Length];
             fsInput.Read(iv, 0, iv.Length);
@@ -57,6 +57,7 @@ namespace CLI.Services
 
             using ICryptoTransform decryptor = aesAlg.CreateDecryptor();
             using CryptoStream csDecrypt = new(fsOutput, decryptor, CryptoStreamMode.Write);
+
             byte[] buffer = new byte[1024];
             int bytesRead;
 
@@ -71,15 +72,14 @@ namespace CLI.Services
         /// </summary>
         /// <param name="generateIV">If true, generates a new IV for the instance.</param>
         /// <returns>An instance of <see cref="Aes"/>.</returns>
-        private Aes CreateAes(bool generateIV = false)
+        private Aes CreateAes()
         {
             Aes aesAlg = Aes.Create();
             aesAlg.Key = _key;
             aesAlg.BlockSize = 128;
-            aesAlg.Mode = CipherMode.CFB;
+            aesAlg.Mode = CipherMode.CBC;
             aesAlg.Padding = PaddingMode.PKCS7;
-            if (generateIV)
-                aesAlg.GenerateIV();
+            aesAlg.GenerateIV();
             return aesAlg;
         }
 
