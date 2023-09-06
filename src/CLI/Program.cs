@@ -180,7 +180,7 @@ namespace CLI
             _logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .WriteTo.File(
-                    Path.Combine(logDirPath!, fileName + ".log"),
+                    Path.Combine(logDirPath!, fileName + DateTime.Now.ToString("yyyyMM") + ".log"),
                     outputTemplate: "[{Timestamp:dd/MM/yyyy HH:mm:ss}] FileEncryptor.CLI [{Level}] {Message}{NewLine}{Exception}")
                 // rollingInterval: RollingInterval.Month,
                 // retainedFileTimeLimit: TimeSpan.FromDays(90))
