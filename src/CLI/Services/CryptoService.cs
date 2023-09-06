@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using CLI.Interfaces;
@@ -23,10 +25,10 @@ namespace CLI.Services
         public void EncryptFile(string inputFile, string outputFile)
         {
             using Aes aesAlg = CreateAes();
-            using FileStream fsInput = new(inputFile, FileMode.Open, FileAccess.Read);
-            using FileStream fsOutput = new(outputFile, FileMode.Create, FileAccess.Write);
+            using FileStream fsInput = new FileStream(inputFile, FileMode.Open, FileAccess.Read);
+            using FileStream fsOutput = new FileStream(outputFile, FileMode.Create, FileAccess.Write);
             using ICryptoTransform encryptor = aesAlg.CreateEncryptor();
-            using CryptoStream csEncrypt = new(fsOutput, encryptor, CryptoStreamMode.Write);
+            using CryptoStream csEncrypt = new CryptoStream(fsOutput, encryptor, CryptoStreamMode.Write);
 
             fsOutput.Write(aesAlg.IV, 0, aesAlg.IV.Length);
             byte[] buffer = new byte[1024];
@@ -48,15 +50,15 @@ namespace CLI.Services
         public void DecryptFile(string inputFile, string outputFile)
         {
             using Aes aesAlg = CreateAes();
-            using FileStream fsInput = new(inputFile, FileMode.Open);
-            using FileStream fsOutput = new(outputFile, FileMode.OpenOrCreate, FileAccess.Write);
+            using FileStream fsInput = new FileStream(inputFile, FileMode.Open);
+            using FileStream fsOutput = new FileStream(outputFile, FileMode.OpenOrCreate, FileAccess.Write);
 
             byte[] iv = new byte[aesAlg.IV.Length];
             fsInput.Read(iv, 0, iv.Length);
             aesAlg.IV = iv;
 
             using ICryptoTransform decryptor = aesAlg.CreateDecryptor();
-            using CryptoStream csDecrypt = new(fsOutput, decryptor, CryptoStreamMode.Write);
+            using CryptoStream csDecrypt = new CryptoStream(fsOutput, decryptor, CryptoStreamMode.Write);
 
             byte[] buffer = new byte[1024];
             int bytesRead;

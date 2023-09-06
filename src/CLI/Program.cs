@@ -3,6 +3,8 @@ using Serilog;
 using CLI.Factories;
 using System.Text.Json;
 using CLI.Models;
+using System;
+using System.IO;
 
 namespace CLI
 {
@@ -179,9 +181,9 @@ namespace CLI
                 .MinimumLevel.Information()
                 .WriteTo.File(
                     Path.Combine(logDirPath!, fileName + ".log"),
-                    outputTemplate: "[{Timestamp:dd/MM/yyyy HH:mm:ss}] FileEncryptor.CLI [{Level}] {Message}{NewLine}{Exception}",
-                    rollingInterval: RollingInterval.Month,
-                    retainedFileTimeLimit: TimeSpan.FromDays(90))
+                    outputTemplate: "[{Timestamp:dd/MM/yyyy HH:mm:ss}] FileEncryptor.CLI [{Level}] {Message}{NewLine}{Exception}")
+                // rollingInterval: RollingInterval.Month,
+                // retainedFileTimeLimit: TimeSpan.FromDays(90))
                 .WriteTo.Console(
                     outputTemplate: "[{Timestamp:dd/MM/yyyy HH:mm:ss}] FileEncryptor.CLI [{Level}] {Message}{NewLine}{Exception}")
                 .Enrich.FromLogContext()

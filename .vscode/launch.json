@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/CLI/bin/Debug/net7.0/CLI.dll",
+            "program": "${workspaceFolder}/src/CLI/bin/Debug/netcoreapp3.1/CLI.dll",
             "args": [
                 "recadastramento.json",
                 "0"
