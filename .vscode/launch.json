@@ -11,7 +11,7 @@
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/src/CLI/bin/Debug/net7.0/CLI.dll",
             "args": [
-                "recadastramento.json",
+                "recadastramento_dec.json",
                 "0"
             ],
             "cwd": "${workspaceFolder}/src/CLI",

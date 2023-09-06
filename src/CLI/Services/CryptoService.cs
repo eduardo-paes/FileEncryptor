@@ -47,33 +47,23 @@ namespace CLI.Services
         /// <exception cref="IOException">Thrown when the file is corrupted.</exception>
         public void DecryptFile(string inputFile, string outputFile)
         {
-            using (Aes aesAlg = Aes.Create())
+            using Aes aesAlg = CreateAes();
+            using FileStream fsInput = new(inputFile, FileMode.Open);
+            using FileStream fsOutput = new(outputFile, FileMode.OpenOrCreate, FileAccess.Write);
+
+            byte[] iv = new byte[aesAlg.IV.Length];
+            fsInput.Read(iv, 0, iv.Length);
+            aesAlg.IV = iv;
+
+            ICryptoTransform decryptor = aesAlg.CreateDecryptor();
+            using CryptoStream csDecrypt = new(fsOutput, decryptor, CryptoStreamMode.Write);
             {
-                aesAlg.Key = _key;
-                aesAlg.BlockSize = 128;
-                aesAlg.Mode = CipherMode.CBC;
-                aesAlg.Padding = PaddingMode.PKCS7;
+                byte[] buffer = new byte[1024];
+                int bytesRead;
 
-                FileStream fsInput = new(inputFile, FileMode.Open);
-                FileStream fsOutput = new FileStream(outputFile, FileMode.OpenOrCreate, FileAccess.Write);
+                while ((bytesRead = fsInput.Read(buffer, 0, buffer.Length)) > 0)
                 {
-                    byte[] iv = new byte[aesAlg.IV.Length];
-                    fsInput.Read(iv, 0, iv.Length);
-                    aesAlg.IV = iv;
-
-                    ICryptoTransform decryptor = aesAlg.CreateDecryptor();
-                    CryptoStream csDecrypt = new CryptoStream(fsOutput, decryptor, CryptoStreamMode.Write);
-                    {
-                        byte[] buffer = new byte[1024];
-                        int bytesRead;
-
-                        while ((bytesRead = fsInput.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            csDecrypt.Write(buffer, 0, bytesRead);
-                        }
-                    }
-                    fsInput.Close();
-                    fsOutput.Close();
+                    csDecrypt.Write(buffer, 0, bytesRead);
                 }
             }
         }

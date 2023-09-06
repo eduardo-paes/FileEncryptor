@@ -48,6 +48,13 @@ namespace CLI
                 // Inicializa o serviço de criptografia
                 var cryptoService = CryptoServiceFactory.Create(settings.Key!);
 
+                // Cria pasta de destino se não existir
+                if (!Directory.Exists(settings.Destination!))
+                {
+                    _logger.Information("Criando diretório de destino: {Destination}", settings.Destination);
+                    Directory.CreateDirectory(settings.Destination!);
+                }
+
                 // Verifica se a operação é de criptografia ou descriptografia
                 if (settings.Operation == "ENC")
                 {
