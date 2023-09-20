@@ -9,12 +9,12 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/CLI/bin/Debug/net7.0/CLI.dll",
+            "program": "${workspaceFolder}/src/FileEncryptor.CLI/bin/Debug/net7.0/FileEncryptor.CLI.dll",
             "args": [
                 "recadastramento_dec.json",
                 "0"
             ],
-            "cwd": "${workspaceFolder}/src/CLI",
+            "cwd": "${workspaceFolder}/src/FileEncryptor.CLI",
             "console": "internalConsole",
             "stopAtEntry": false
         },

@@ -1,7 +1,7 @@
-using CLI.Interfaces;
-using CLI.Services;
+using FileEncryptor.CLI.Interfaces;
+using FileEncryptor.CLI.Services;
 
-namespace CLI.Factories
+namespace FileEncryptor.CLI.Factories
 {
     public class CryptoServiceFactory
     {

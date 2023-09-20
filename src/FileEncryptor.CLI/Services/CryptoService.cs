@@ -1,8 +1,8 @@
 using System.Security.Cryptography;
 using System.Text;
-using CLI.Interfaces;
+using FileEncryptor.CLI.Interfaces;
 
-namespace CLI.Services
+namespace FileEncryptor.CLI.Services
 {
     public class CryptoService : ICryptoService
     {
