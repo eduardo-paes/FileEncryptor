@@ -40,3 +40,11 @@ O arquivo de configuração deve estar presente no caminho estipulado nas config
   }
 }
 ```
+
+## Publicação do Executável
+
+Comando de publicação do executável para `Windows` em arquitetura `x64`:
+
+```shell
+dotnet publish src/FileEncryptor/FileEncryptor.csproj -o publish --sc -c Release --os win --arch x64
+```

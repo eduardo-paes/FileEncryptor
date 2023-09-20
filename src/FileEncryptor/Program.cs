@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Serilog;
-using FileEncryptor.CLI.Factories;
+using FileEncryptor.Factories;
 using System.Text.Json;
-using FileEncryptor.CLI.Models;
+using FileEncryptor.Models;
 
-namespace FileEncryptor.CLI
+namespace FileEncryptor
 {
     public class Program
     {
@@ -186,11 +186,11 @@ namespace FileEncryptor.CLI
                 .MinimumLevel.Information()
                 .WriteTo.File(
                     Path.Combine(logDirPath!, fileName + ".log"),
-                    outputTemplate: "[{Timestamp:dd/MM/yyyy HH:mm:ss}] FileEncryptor.FileEncryptor.CLI [{Level}] {Message}{NewLine}{Exception}",
+                    outputTemplate: "[{Timestamp:dd/MM/yyyy HH:mm:ss}] FileEncryptor.FileEncryptor [{Level}] {Message}{NewLine}{Exception}",
                     rollingInterval: RollingInterval.Month,
                     retainedFileTimeLimit: TimeSpan.FromDays(90))
                 .WriteTo.Console(
-                    outputTemplate: "[{Timestamp:dd/MM/yyyy HH:mm:ss}] FileEncryptor.FileEncryptor.CLI [{Level}] {Message}{NewLine}{Exception}")
+                    outputTemplate: "[{Timestamp:dd/MM/yyyy HH:mm:ss}] FileEncryptor.FileEncryptor [{Level}] {Message}{NewLine}{Exception}")
                 .Enrich.FromLogContext()
                 .CreateLogger();
             #endregion

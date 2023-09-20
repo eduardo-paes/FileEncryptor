@@ -1,4 +1,4 @@
-namespace FileEncryptor.CLI.Interfaces
+namespace FileEncryptor.Interfaces
 {
     public interface ICryptoService
     {

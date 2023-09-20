@@ -1,4 +1,4 @@
-namespace FileEncryptor.CLI.Models
+namespace FileEncryptor.Models
 {
     public class Settings
     {
